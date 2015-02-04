@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		01177F491A815CEE00BB57BA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01177F481A815CEE00BB57BA /* main.cpp */; };
+		01177F501A8179BE00BB57BA /* UnionFind.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01177F4F1A8179BE00BB57BA /* UnionFind.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +26,8 @@
 /* Begin PBXFileReference section */
 		01177F451A815CEE00BB57BA /* UnionFind */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UnionFind; sourceTree = BUILT_PRODUCTS_DIR; };
 		01177F481A815CEE00BB57BA /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = UnionFind/main.cpp; sourceTree = "<group>"; };
+		01177F4F1A8179BE00BB57BA /* UnionFind.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UnionFind.cpp; path = UnionFind/UnionFind.cpp; sourceTree = "<group>"; };
+		01177F511A8179FE00BB57BA /* UnionFind.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UnionFind.h; path = UnionFind/UnionFind.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +45,8 @@
 			isa = PBXGroup;
 			children = (
 				01177F481A815CEE00BB57BA /* main.cpp */,
+				01177F511A8179FE00BB57BA /* UnionFind.h */,
+				01177F4F1A8179BE00BB57BA /* UnionFind.cpp */,
 				01177F461A815CEE00BB57BA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -110,6 +115,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01177F501A8179BE00BB57BA /* UnionFind.cpp in Sources */,
 				01177F491A815CEE00BB57BA /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
