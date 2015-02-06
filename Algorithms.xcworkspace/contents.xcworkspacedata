@@ -4,4 +4,7 @@
    <FileRef
       location = "group:UnionFind/UnionFind.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:Sorting/Sorting.xcodeproj">
+   </FileRef>
 </Workspace>
