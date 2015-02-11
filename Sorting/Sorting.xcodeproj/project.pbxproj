@@ -23,6 +23,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		01177F521A8BF7CF00BB57BA /* MergeSort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MergeSort.h; path = Sorting/MergeSort.h; sourceTree = "<group>"; };
+		01177F531A8BF7CF00BB57BA /* QuickSort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QuickSort.h; path = Sorting/QuickSort.h; sourceTree = "<group>"; };
+		01177F541A8BF83D00BB57BA /* ShellSort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ShellSort.h; path = Sorting/ShellSort.h; sourceTree = "<group>"; };
+		01177F551A8BF91500BB57BA /* SelectionSort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SelectionSort.h; path = Sorting/SelectionSort.h; sourceTree = "<group>"; };
+		01177F561A8BF95900BB57BA /* InsertionSort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InsertionSort.h; path = Sorting/InsertionSort.h; sourceTree = "<group>"; };
+		01177F571A8BF9A500BB57BA /* Shuffle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Shuffle.h; path = Sorting/Shuffle.h; sourceTree = "<group>"; };
 		5BC0891E1A846DEB00788D0E /* Sorting */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Sorting; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BC089211A846DEB00788D0E /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = Sorting/main.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -42,6 +48,12 @@
 			isa = PBXGroup;
 			children = (
 				5BC089211A846DEB00788D0E /* main.cpp */,
+				01177F571A8BF9A500BB57BA /* Shuffle.h */,
+				01177F551A8BF91500BB57BA /* SelectionSort.h */,
+				01177F561A8BF95900BB57BA /* InsertionSort.h */,
+				01177F541A8BF83D00BB57BA /* ShellSort.h */,
+				01177F521A8BF7CF00BB57BA /* MergeSort.h */,
+				01177F531A8BF7CF00BB57BA /* QuickSort.h */,
 				5BC0891F1A846DEB00788D0E /* Products */,
 			);
 			sourceTree = "<group>";
