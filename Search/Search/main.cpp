@@ -1,8 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <unordered_map>
-#include <unordered_set>
-#include <cassert>
 
 template<typename T>
 class binary_heap
@@ -25,6 +22,9 @@ public:
 			*it = *ll;
 	}
 
+	size_t size() const { return _v.size() - 1; }
+	size_t empty() const { return size() == 0; }
+
 	void print()
 	{
 		for (auto i = 1; i < _v.size(); ++i)
@@ -40,19 +40,29 @@ public:
 
 	T remove()
 	{
+		if (empty())
+			return;
+
 		T t(_v[1]);
-		std::swap(_v[1], _v[_v.size() - 1]);
-		sink(_v[1]);
+		_v[1] = _v.back();
+		_v.pop_back();
+		sink(1);
 		return t;
 	}
 
 	void heap_sort() {
-		// first pass, sink everything starting from lowest parent
+		// first pass: sink everything starting from lowest parent
 		// all the way to the root (this is fucking genius)
-		for (size_t i = (_v.size() - 1) / 2; i > 0; --i)
+		// NOTE: O(N) = 2N  ---> PRETTY SWEET!
+		for (size_t i = size() / 2; i > 0; --i)
 			sink(i, _v.size());
 
-		for (size_t i = _v.size() - 1; i > 1; --i) {
+		// second pass:
+		// - Swap greatest element (i.e. the root) with last the element
+		// - Leave greatest element (just swapped to the bottom of the heap) and sink
+		//   new root as if the heap just shrunk by 1 (this way all biggest elements
+		//   stay ordered at the end)
+		for (size_t i = size(); i > 1; --i) {
 			std::swap(_v[1], _v[i]);
 			sink(1, i);
 		}
@@ -92,8 +102,8 @@ int main(int argc, const char * argv[])
 	h.heap_sort();
 	std::cout << "Heap after heapsort:" << std::endl;
 	h.print();
+//	std::cout << "sorted? " << (std::is_sorted(++h._v.begin(), h._v.end()) ? "YES" : "NO") << std::endl;
 
 	std::cout << std::endl;
 	std::cout << std::endl;
 }
-
