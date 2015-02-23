@@ -69,17 +69,13 @@ private:
 	{
 		while (2 * i < size) {
 			size_t j = 2 * i;
-			// pick greatest child (if there is one)
+			// pick i's greatest child (if there are more than one)
 			if (j+1 < size && _v[j+1] > _v[j]) ++j;
 			if (_v[i] >= _v[j]) break;
 			std::swap(_v[i], _v[j]);
 			i = j;
 		}
 	}
-
-	size_t search(const T& v);
-
-	size_t size() const { return _v.size() - 1; }
 
 	std::vector<T> _v;
 };
