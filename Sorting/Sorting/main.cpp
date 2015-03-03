@@ -3,6 +3,7 @@
 #include "ShellSort.h"
 #include "MergeSort.h"
 #include "QuickSort.h"
+#include "HeapSort.h"
 #include "Select.h"
 #include <iostream>
 #include <algorithm>
@@ -11,7 +12,7 @@ template<class T>
 void p(const std::vector<T>& v)
 {
 	for(auto d : v) {
-		std::cout << d;
+        std::cout << d << " ";
 	}
 	std::cout << std::endl;
 }
@@ -35,7 +36,8 @@ int main(int argc, const char * argv[]) {
 //	insertionSort(v);
 //	shellSort(v);
 //	mergeSort(v);
-	quickSort(v);
+//	quickSort(v);
+    heapSort(v);
 
 //	std::sort(v.begin(), v.end());
 //	std::stable_sort(v.begin(), v.end());
