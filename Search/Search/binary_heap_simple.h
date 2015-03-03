@@ -3,7 +3,6 @@
 #include <vector>
 #include <cassert>
 
-// binary heap simple implementation (i.e. v is one-based since the heap's root is at i = 1)
 template<typename T>
 class binary_heap
 {
@@ -19,7 +18,7 @@ public:
 
 	void print()
 	{
-		for (auto i = 1; i < _v.size(); ++i)
+		for (auto i = 0; i < _v.size(); ++i)
 			std::cout << _v[i] << " ";
 		std::cout << std::endl;
 	}
@@ -44,21 +43,23 @@ public:
 private:
 	void swim(size_t i)
 	{
-		for (size_t p = i / 2; i > 1 && _v[i] > _v[p]; i = p, p = i / 2)
-			std::swap(_v[i], _v[p]);
+        for (size_t p = (i - 1) / 2; i > 0 && _v[i] > _v[p]; i = p, p = (i - 1) / 2)
+            std::swap(_v[i], _v[p]);
 	}
 
 	void sink(size_t i, size_t size)
 	{
-		while (2 * i < size) {
-			size_t j = 2 * i;
-			// pick i's greatest child (if there are more than one)
-			if (j+1 < size && _v[j+1] > _v[j]) ++j;
-			if (_v[i] >= _v[j]) break;
-			std::swap(_v[i], _v[j]);
-			i = j;
-		}
+        size_t j = 2 * i + 1;
+        while (j < size) {
+            // pick i's greatest child (if there are more than one)
+            if (j+1 < size && _v[j+1] > _v[j]) ++j;
+            if (_v[i] >= _v[j]) break;
+            std::swap(_v[i], _v[j]);
+            i = j;
+            j = 2 * i + 1;
+        }
 	}
 
+    // _v is zero-based, meaning that the root of the heap sits at _v[0]
 	std::vector<T> _v;
 };

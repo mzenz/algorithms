@@ -3,7 +3,9 @@
 #include <vector>
 #include <cassert>
 
-// binary heap simple implementation (i.e. v is one-based since the heap's root is at i = 1)
+// Binary heap, simple implementation
+// The underlying vector is 1-based (meaning theroot sits at i = 1, not i = 0)
+// This makes parent nad child calculations a bit simpler to compute
 template<typename T>
 class binary_heap_simple
 {

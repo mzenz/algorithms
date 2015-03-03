@@ -4,7 +4,7 @@
 
 int main(int argc, const char * argv[])
 {
-    binary_heap_simple<char> h;
+    binary_heap<char> h;
     h.insert('S');
     h.insert('O');
     h.insert('R');
