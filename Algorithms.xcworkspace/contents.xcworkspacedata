@@ -11,6 +11,9 @@
       location = "group:Prime/Prime.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:PriorityQueue/PriorityQueue.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Search/Search.xcodeproj">
    </FileRef>
 </Workspace>
