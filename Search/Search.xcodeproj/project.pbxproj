@@ -23,8 +23,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		54E0CEFB1AA6648000A95EB9 /* binary_heap_simple.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = binary_heap_simple.h; path = Search/binary_heap_simple.h; sourceTree = "<group>"; };
 		54E0CEFD1AA6773100A95EB9 /* binary_heap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = binary_heap.h; path = Search/binary_heap.h; sourceTree = "<group>"; };
+		54E0CEFE1AA67ADA00A95EB9 /* binary_heap_1_based.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = binary_heap_1_based.h; path = Search/binary_heap_1_based.h; sourceTree = "<group>"; };
 		5B4665CA1A8D1C0C00135794 /* Search */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Search; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B4665CD1A8D1C0C00135794 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = Search/main.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -43,8 +43,8 @@
 		5B4665C11A8D1C0C00135794 = {
 			isa = PBXGroup;
 			children = (
-				54E0CEFB1AA6648000A95EB9 /* binary_heap_simple.h */,
 				54E0CEFD1AA6773100A95EB9 /* binary_heap.h */,
+				54E0CEFE1AA67ADA00A95EB9 /* binary_heap_1_based.h */,
 				5B4665CD1A8D1C0C00135794 /* main.cpp */,
 				5B4665CB1A8D1C0C00135794 /* Products */,
 			);

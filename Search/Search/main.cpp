@@ -1,9 +1,11 @@
 #include <iostream>
 #include "binary_heap.h"
-#include "binary_heap_simple.h"
+#include "binary_heap_1_based.h"
+#include <vector>
 
 int main(int argc, const char * argv[])
 {
+//    binary_heap_1_based<char> h;
     binary_heap<char> h;
     h.insert('S');
     h.insert('O');
