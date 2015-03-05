@@ -23,7 +23,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		54E0CF131AA67E3100A95EB9 /* symbol_table.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = symbol_table.h; path = Search/symbol_table.h; sourceTree = "<group>"; };
+		54E0CF131AA67E3100A95EB9 /* dictionary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = dictionary.h; path = Search/dictionary.h; sourceTree = "<group>"; };
 		5B4665CA1A8D1C0C00135794 /* Search */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Search; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B4665CD1A8D1C0C00135794 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = Search/main.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -42,7 +42,7 @@
 		5B4665C11A8D1C0C00135794 = {
 			isa = PBXGroup;
 			children = (
-				54E0CF131AA67E3100A95EB9 /* symbol_table.h */,
+				54E0CF131AA67E3100A95EB9 /* dictionary.h */,
 				5B4665CD1A8D1C0C00135794 /* main.cpp */,
 				5B4665CB1A8D1C0C00135794 /* Products */,
 			);
