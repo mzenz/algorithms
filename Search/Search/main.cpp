@@ -1,10 +1,27 @@
 #include <iostream>
-#include "dictionary.h"
+#include "BinarySearchTree.h"
 #include <vector>
+
+using namespace std;
 
 int main(int argc, const char * argv[])
 {
-    Dictionary<std::string, int> t;
-    
-	std::cout << std::endl;
+    BinarySearchTree<char, std::string> t;
+	auto v = t.get('C');
+	cout << "v = " << (v ? *v : "null")<< endl;
+	
+//	t.insert('X', "xx");
+//	t.insert('S', "ss");
+//	t.insert('B', "bb");
+//	t.insert('C', "cc");
+//	t.insert('A', "aa");
+//	t.insert('C', "CCC");
+
+	t.insert('D');
+	t.insert('A');
+	t.insert('B');
+	t.insert('C');
+
+	v = t.get('C');
+	cout << "v = " << (v ? *v : "null")<< endl;
 }
