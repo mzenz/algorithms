@@ -101,8 +101,10 @@ bool BinarySearchTree<K,T>::exists(K key) const
 template<typename K, typename T>
 typename BinarySearchTree<K,T>::Node* BinarySearchTree<K,T>::insert(Node* node, K key, const T& value)
 {
-	if (node == nullptr)
+	if (node == nullptr) {
+		++_size;
 		return new Node(key, value);
+	}
 	if      (key < node->_key) node->_left  = insert(node->_left, key, value);
 	else if (key > node->_key) node->_right = insert(node->_right, key, value);
 	else                       node->_value = value;
@@ -129,6 +131,7 @@ void BinarySearchTree<K,T>::insert(K key, const T& value)
 			return;
 		}
 	}
+	++_size;
 	*node = new Node(key, value);
 }
 #endif
