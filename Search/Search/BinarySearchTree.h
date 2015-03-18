@@ -1,11 +1,16 @@
 #pragma once
 
+#include <stack>
+#include <cassert>
+
 //#define RECURSIVE_INSERT
 
 template<typename K, typename T>
 class BinarySearchTree
 {
 public:
+//    class Iterator;
+
 	BinarySearchTree();
 
     T* get(K key);
@@ -37,6 +42,10 @@ public:
     size_t count(K lo, K hi) const;
     
     void keys() const;
+    
+    class Iterator;
+
+    Iterator begin();
 
 private:
     struct Node {
@@ -63,6 +72,50 @@ private:
     Node* _root;
 	size_t _size;
 };
+
+template<typename K, typename T>
+class BinarySearchTree<K,T>::Iterator
+{
+public:
+    bool valid() const { return !s.empty(); }
+    void operator++() {
+        s.pop();
+        if (s.top()->_right) {
+            Node* right = s.top()->_right;
+            s.push(right);
+            pushAllLeft(right);
+        }
+    }
+    
+    T* get() {
+        if (s.empty())
+            return nullptr;
+        return &s.top()->_value;
+    }
+private:
+    friend class BinarySearchTree<K,T>;
+    
+    Iterator(Node* n) {
+        assert(n);
+        pushAllLeft(n);
+    }
+
+    void pushAllLeft(Node* n) {
+        assert(n);
+        while (n->_left) {
+            s.push(n->_left);
+            n = n->_left;
+        }
+    }
+
+    std::stack<Node*> s;
+};
+
+template<typename K, typename T>
+typename BinarySearchTree<K,T>::Iterator BinarySearchTree<K,T>::begin()
+{
+    return Iterator(_root);
+}
 
 template<typename K, typename T>
 BinarySearchTree<K,T>::BinarySearchTree()

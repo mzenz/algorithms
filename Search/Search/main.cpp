@@ -1,6 +1,7 @@
 #include <iostream>
 #include "BinarySearchTree.h"
 #include <vector>
+#include <set>
 
 using namespace std;
 
@@ -34,4 +35,25 @@ int main(int argc, const char * argv[])
     max = t.max();
     cout << "min = " << (min ? *min : "null")<< endl;
     cout << "max = " << (max ? *max : "null")<< endl;
+
+    for (auto it = t.begin(); it.valid(); ++it)
+        cout << *it.get() << ", ";
+    cout << endl;
+
+//    set<char> s;
+//    s.insert('D');
+//    s.insert('A');
+//    s.insert('R');
+//    s.insert('B');
+//    s.insert('C');
+//    s.insert('X');
+//    
+//    for (auto val : s)
+//        cout << val << ", ";
+//    cout << endl;
+//    
+//    auto it = s.lower_bound('O');
+//    cout << "lower bound(R) = " << (it != s.end() ? *it : '\0') << endl;
+//    it = s.upper_bound('O');
+//    cout << "upper bound(R) = " << (it != s.end() ? *it : '\0') << endl;
 }
