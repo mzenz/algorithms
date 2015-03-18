@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stack>
+#include <vector>
 #include <cassert>
 
 //#define RECURSIVE_INSERT
@@ -78,20 +79,19 @@ class BinarySearchTree<K,T>::Iterator
 {
 public:
     bool valid() const { return !s.empty(); }
-    void operator++() {
+    void operator++()
+	{
+		if (s.empty())
+			return;
+
+		auto right = s.top()->_right;
         s.pop();
-        if (s.top()->_right) {
-            Node* right = s.top()->_right;
-            s.push(right);
+        if (right)
             pushAllLeft(right);
-        }
     }
-    
-    T* get() {
-        if (s.empty())
-            return nullptr;
-        return &s.top()->_value;
-    }
+
+    T* get() { return s.empty() ? nullptr : &s.top()->_value; }
+
 private:
     friend class BinarySearchTree<K,T>;
     
@@ -102,8 +102,8 @@ private:
 
     void pushAllLeft(Node* n) {
         assert(n);
-        while (n->_left) {
-            s.push(n->_left);
+        while (n) {
+            s.push(n);
             n = n->_left;
         }
     }

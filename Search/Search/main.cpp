@@ -7,7 +7,8 @@ using namespace std;
 
 int main(int argc, const char * argv[])
 {
-    BinarySearchTree<char, std::string> t;
+	typedef BinarySearchTree<char, std::string> BST;
+    BST t;
 	auto v = t.get('C');
 	cout << "v = " << (v ? *v : "null")<< endl;
     auto min = t.min();
@@ -24,10 +25,10 @@ int main(int argc, const char * argv[])
 
 	t.insert('D', "d");
 	t.insert('A', "a");
-    t.insert('R', "r");
 	t.insert('B', "b");
     t.insert('C', "c");
     t.insert('X', "x");
+    t.insert('R', "r");
 
 	v = t.get('C');
     cout << "v = " << (v ? *v : "null")<< endl;
@@ -39,21 +40,4 @@ int main(int argc, const char * argv[])
     for (auto it = t.begin(); it.valid(); ++it)
         cout << *it.get() << ", ";
     cout << endl;
-
-//    set<char> s;
-//    s.insert('D');
-//    s.insert('A');
-//    s.insert('R');
-//    s.insert('B');
-//    s.insert('C');
-//    s.insert('X');
-//    
-//    for (auto val : s)
-//        cout << val << ", ";
-//    cout << endl;
-//    
-//    auto it = s.lower_bound('O');
-//    cout << "lower bound(R) = " << (it != s.end() ? *it : '\0') << endl;
-//    it = s.upper_bound('O');
-//    cout << "upper bound(R) = " << (it != s.end() ? *it : '\0') << endl;
 }
