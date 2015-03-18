@@ -16,13 +16,6 @@ int main(int argc, const char * argv[])
     cout << "min = " << (min ? *min : "null")<< endl;
     cout << "max = " << (max ? *max : "null")<< endl;
 
-//	t.insert('X', "xx");
-//	t.insert('S', "ss");
-//	t.insert('B', "bb");
-//	t.insert('C', "cc");
-//	t.insert('A', "aa");
-//	t.insert('C', "CCC");
-
 	t.insert('D', "d");
 	t.insert('A', "a");
 	t.insert('B', "b");
