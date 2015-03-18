@@ -20,8 +20,8 @@ public:
 	bool empty() const { return _root; }
 	size_t size() const { return _size; }
 
-    T min() const;
-    T max() const;
+    T* min() const;
+    T* max() const;
 
     void removeMin();
     void removeMax();
@@ -97,7 +97,6 @@ bool BinarySearchTree<K,T>::exists(K key) const
 }
 
 #ifdef RECURSIVE_INSERT
-
 template<typename K, typename T>
 typename BinarySearchTree<K,T>::Node* BinarySearchTree<K,T>::insert(Node* node, K key, const T& value)
 {
@@ -145,8 +144,29 @@ void BinarySearchTree<K,T>::remove(K key)
 	}
 }
 
+template<typename K, typename T>
+T* BinarySearchTree<K,T>::min() const
+{
+    Node* n = _root;
+    while (n) {
+        if (!n->_left)
+            return &n->_value;
+        n = n->_left;
+    }
+    return nullptr;
+}
 
-
+template<typename K, typename T>
+T* BinarySearchTree<K,T>::max() const
+{
+    Node* n = _root;
+    while (n) {
+        if (!n->_right)
+            return &n->_value;
+        n = n->_right;
+    }
+    return nullptr;
+}
 
 
 
