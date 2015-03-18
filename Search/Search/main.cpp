@@ -8,14 +8,8 @@ using namespace std;
 int main(int argc, const char * argv[])
 {
 	typedef BinarySearchTree<char, std::string> BST;
-    BST t;
-	auto v = t.get('C');
-	cout << "v = " << (v ? *v : "null")<< endl;
-    auto min = t.min();
-    auto max = t.max();
-    cout << "min = " << (min ? *min : "null")<< endl;
-    cout << "max = " << (max ? *max : "null")<< endl;
 
+    BST t;
 	t.insert('D', "d");
 	t.insert('A', "a");
 	t.insert('B', "b");
@@ -23,10 +17,10 @@ int main(int argc, const char * argv[])
     t.insert('X', "x");
     t.insert('R', "r");
 
-	v = t.get('C');
+	auto v = t.get('C');
     cout << "v = " << (v ? *v : "null")<< endl;
-    min = t.min();
-    max = t.max();
+    auto min = t.min();
+    auto max = t.max();
     cout << "min = " << (min ? *min : "null")<< endl;
     cout << "max = " << (max ? *max : "null")<< endl;
 
