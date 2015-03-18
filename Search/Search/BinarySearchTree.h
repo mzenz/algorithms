@@ -10,8 +10,6 @@ template<typename K, typename T>
 class BinarySearchTree
 {
 public:
-//    class Iterator;
-
 	BinarySearchTree();
 
     T* get(K key);
@@ -45,8 +43,10 @@ public:
     void keys() const;
     
     class Iterator;
+    class ReverseIterator;
 
     Iterator begin();
+    ReverseIterator rbegin();
 
 private:
     struct Node {
@@ -112,9 +112,52 @@ private:
 };
 
 template<typename K, typename T>
+class BinarySearchTree<K,T>::ReverseIterator
+{
+public:
+    bool valid() const { return !s.empty(); }
+    void operator++()
+	{
+		if (s.empty())
+			return;
+
+		auto left = s.top()->_left;
+        s.pop();
+        if (left)
+            pushAllRight(left);
+    }
+
+    T* get() { return s.empty() ? nullptr : &s.top()->_value; }
+
+private:
+    friend class BinarySearchTree<K,T>;
+    
+    ReverseIterator(Node* n) {
+        assert(n);
+        pushAllRight(n);
+    }
+
+    void pushAllRight(Node* n) {
+        assert(n);
+        while (n) {
+            s.push(n);
+            n = n->_right;
+        }
+    }
+
+    std::stack<Node*> s;
+};
+
+template<typename K, typename T>
 typename BinarySearchTree<K,T>::Iterator BinarySearchTree<K,T>::begin()
 {
     return Iterator(_root);
+}
+
+template<typename K, typename T>
+typename BinarySearchTree<K,T>::ReverseIterator BinarySearchTree<K,T>::rbegin()
+{
+    return ReverseIterator(_root);
 }
 
 template<typename K, typename T>
