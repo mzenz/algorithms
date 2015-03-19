@@ -93,21 +93,21 @@ public:
     }
 
     T* get() { return s.empty() ? nullptr : &s.top()->_value; }
+    T& operator*() { assert(valid()); return s.top()->_value; }
+    T& operator->() { return **this; }
 
 private:
     friend class BinarySearchTree<K,T>;
     
-    Iterator(Node* n) {
-        assert(n);
+    Iterator(Node* n)
+	{
         pushAllLeft(n);
     }
 
-    void pushAllLeft(Node* n) {
-        assert(n);
-        while (n) {
+    void pushAllLeft(Node* n)
+	{
+        for (; n; n = n->_left)
             s.push(n);
-            n = n->_left;
-        }
     }
 
     std::stack<Node*> s;
@@ -130,21 +130,18 @@ public:
     }
 
     T* get() { return s.empty() ? nullptr : &s.top()->_value; }
+    T& operator*() { assert(valid()); return s.top()->_value; }
+    T& operator->() { return **this; }
 
 private:
     friend class BinarySearchTree<K,T>;
     
-    ReverseIterator(Node* n) {
-        assert(n);
-        pushAllRight(n);
-    }
+    ReverseIterator(Node* n) { pushAllRight(n); }
 
-    void pushAllRight(Node* n) {
-        assert(n);
-        while (n) {
+    void pushAllRight(Node* n)
+	{
+        for (; n; n = n->_right)
             s.push(n);
-            n = n->_right;
-        }
     }
 
     std::stack<Node*> s;
