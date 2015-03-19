@@ -5,10 +5,21 @@
 
 using namespace std;
 
+#define INIT_LIST
+
 int main(int argc, const char * argv[])
 {
 	typedef BinarySearchTree<char, std::string> BST;
 
+#ifdef INIT_LIST
+    BST t { {'D', "d"},
+			{'A', "a"},
+			{'B', "b"},
+			{'C', "c"},
+			{'X', "x"},
+			{'R', "r"}};
+//    BST t {'D','A','B','C','X','R'};
+#else
     BST t;
 	t.insert('D', "d");
 	t.insert('A', "a");
@@ -16,6 +27,7 @@ int main(int argc, const char * argv[])
     t.insert('C', "c");
     t.insert('X', "x");
     t.insert('R', "r");
+#endif
 
 	auto v = t.get('C');
     cout << "v = " << (v ? *v : "null")<< endl;

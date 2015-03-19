@@ -11,6 +11,8 @@ class BinarySearchTree
 {
 public:
 	BinarySearchTree();
+	BinarySearchTree(std::initializer_list<std::pair<K,T>> list);
+	BinarySearchTree(std::initializer_list<K> list);
 
     T* get(K key);
 	const T* get(K key) const;
@@ -165,6 +167,20 @@ BinarySearchTree<K,T>::BinarySearchTree()
 	: _root(nullptr)
 	, _size(0)
 {
+}
+
+template<typename K, typename T>
+BinarySearchTree<K,T>::BinarySearchTree(std::initializer_list<std::pair<K,T>> list)
+{
+	for(const auto& p : list)
+		insert(p.first, p.second);
+}
+
+template<typename K, typename T>
+BinarySearchTree<K,T>::BinarySearchTree(std::initializer_list<K> list)
+{
+	for(const auto& k : list)
+		insert(k);
 }
 
 template<typename K, typename T>
