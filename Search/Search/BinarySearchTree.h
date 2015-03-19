@@ -44,6 +44,7 @@ public:
     
     void keys() const;
     
+    class IteratorBase;
     class Iterator;
     class ReverseIterator;
 
@@ -77,87 +78,72 @@ private:
 };
 
 template<typename K, typename T>
-class BinarySearchTree<K,T>::Iterator
+class BinarySearchTree<K,T>::IteratorBase
 {
 public:
     bool valid() const { return !s.empty(); }
-    void operator++()
-	{
-		if (s.empty())
-			return;
-
-		auto right = s.top()->_right;
-        s.pop();
-        if (right)
-            pushAllLeft(right);
-    }
 
     T* get() { return s.empty() ? nullptr : &s.top()->_value; }
     T& operator*() { assert(valid()); return s.top()->_value; }
     T& operator->() { return **this; }
 
-private:
-    friend class BinarySearchTree<K,T>;
-    
-    Iterator(Node* n)
-	{
-        pushAllLeft(n);
-    }
-
+protected:
     void pushAllLeft(Node* n)
 	{
         for (; n; n = n->_left)
             s.push(n);
     }
 
-    std::stack<Node*> s;
-};
-
-template<typename K, typename T>
-class BinarySearchTree<K,T>::ReverseIterator
-{
-public:
-    bool valid() const { return !s.empty(); }
-    void operator++()
-	{
-		if (s.empty())
-			return;
-
-		auto left = s.top()->_left;
-        s.pop();
-        if (left)
-            pushAllRight(left);
-    }
-
-    T* get() { return s.empty() ? nullptr : &s.top()->_value; }
-    T& operator*() { assert(valid()); return s.top()->_value; }
-    T& operator->() { return **this; }
-
-private:
-    friend class BinarySearchTree<K,T>;
-    
-    ReverseIterator(Node* n) { pushAllRight(n); }
-
     void pushAllRight(Node* n)
 	{
         for (; n; n = n->_right)
             s.push(n);
     }
-
+	
     std::stack<Node*> s;
 };
 
 template<typename K, typename T>
-typename BinarySearchTree<K,T>::Iterator BinarySearchTree<K,T>::begin()
+class BinarySearchTree<K,T>::Iterator : public BinarySearchTree<K,T>::IteratorBase
 {
-    return Iterator(_root);
-}
+public:
+    void operator++()
+	{
+		if (IteratorBase::s.empty())
+			return;
+
+		auto right = IteratorBase::s.top()->_right;
+        IteratorBase::s.pop();
+        if (right)
+            IteratorBase::pushAllLeft(right);
+    }
+
+private:
+    friend class BinarySearchTree<K,T>;
+    
+    Iterator(Node* n) { IteratorBase::pushAllLeft(n); }
+};
 
 template<typename K, typename T>
-typename BinarySearchTree<K,T>::ReverseIterator BinarySearchTree<K,T>::rbegin()
+class BinarySearchTree<K,T>::ReverseIterator : public BinarySearchTree<K,T>::IteratorBase
 {
-    return ReverseIterator(_root);
-}
+public:
+    void operator++()
+	{
+		if (IteratorBase::s.empty())
+			return;
+
+		auto left = IteratorBase::s.top()->_left;
+        IteratorBase::s.pop();
+        if (left)
+            IteratorBase::pushAllRight(left);
+    }
+
+private:
+    friend class BinarySearchTree<K,T>;
+    
+    ReverseIterator(Node* n) { IteratorBase::pushAllRight(n); }
+};
 
 template<typename K, typename T>
 BinarySearchTree<K,T>::BinarySearchTree()
@@ -178,6 +164,18 @@ BinarySearchTree<K,T>::BinarySearchTree(std::initializer_list<K> list)
 {
 	for(const auto& k : list)
 		insert(k);
+}
+
+template<typename K, typename T>
+typename BinarySearchTree<K,T>::Iterator BinarySearchTree<K,T>::begin()
+{
+    return Iterator(_root);
+}
+
+template<typename K, typename T>
+typename BinarySearchTree<K,T>::ReverseIterator BinarySearchTree<K,T>::rbegin()
+{
+    return ReverseIterator(_root);
 }
 
 template<typename K, typename T>

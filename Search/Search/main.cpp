@@ -10,7 +10,7 @@ using namespace std;
 int main(int argc, const char * argv[])
 {
 	typedef BinarySearchTree<char, std::string> BST;
-
+	
 #ifdef INIT_LIST
     BST t { {'D', "d"},
 			{'A', "a"},
@@ -18,7 +18,6 @@ int main(int argc, const char * argv[])
 			{'C', "c"},
 			{'X', "x"},
 			{'R', "r"}};
-//    BST t {'D','A','B','C','X','R'};
 #else
     BST t;
 	t.insert('D', "d");
