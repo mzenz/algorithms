@@ -22,7 +22,7 @@ public:
     
     bool exists(K key) const;
     
-    void insert(K key, const T& value = T());
+    bool insert(K key, const T& value = T());
     
     // unimplemented
     void remove(K key);
@@ -141,7 +141,7 @@ bool RedBlackTree<K,T>::exists(K key) const
 
 #ifndef RECURSIVE_INSERT
 template<typename K, typename T>
-void RedBlackTree<K,T>::insert(K key, const T& value)
+bool RedBlackTree<K,T>::insert(K key, const T& value)
 {
     Node** node = &_root;
     while (*node) {
@@ -150,11 +150,12 @@ void RedBlackTree<K,T>::insert(K key, const T& value)
         else {
             // if value matches node replace value and return, nothing else to do
             (*node)->_value = value;
-            return;
+            return false;
         }
     }
     ++_size;
     *node = new Node(key, value);
+    return true;
 }
 #else
 template<typename K, typename T>
