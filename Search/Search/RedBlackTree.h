@@ -57,25 +57,25 @@ public:
     ReverseIterator rbegin();
     
 private:
-    enum class Color { Red, Black };
-
     struct Node {
         K _key;
         T _value;
         Node* left;
         Node* right;
-        Color c;
+        bool red;
 
-        Node(K key, const T& value, Color color = Color::Red)
+        Node(K key, const T& value, bool _red = false)
             : _key(key)
             , _value(value)
             , left(nullptr)
             , right(nullptr)
-            , c(color)
+            , red(_red)
         {
         }
         
-        bool red() const { return c == Color::Red; }
+        bool isRed() const { return red; }
+        void makeRed() { red = true; }
+        void makeBlack() { red = false; }
     };
     
     class IteratorBase;
@@ -124,6 +124,17 @@ typename RedBlackTree<K,T>::Node* RedBlackTree<K,T>::findNode(K key)
         else                          return   *node;
     }
     return nullptr;
+}
+
+template<typename K, typename T>
+void RedBlackTree<K,T>::rotateLeft(Node* node)
+{
+    assert(node && node->right && node->right->red());
+    auto n = node->right;
+    node->right = n->left;
+    n->left = node;
+    node->makeRed();
+    n->makeBlack();
 }
 
 template<typename K, typename T>
