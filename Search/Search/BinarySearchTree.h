@@ -24,6 +24,7 @@ public:
 
     void insert(K key, const T& value = T());
 
+    // unimplemented
     void remove(K key);
 
 	bool empty() const { return _root; }
@@ -32,19 +33,21 @@ public:
     T* min() const;
     T* max() const;
 
+    // unimplemented
     void removeMin();
+    // unimplemented
     void removeMax();
-    
+    // unimplemented
     K select(size_t rank) const;
-    
+    // unimplemented
     size_t rank(K key) const;
-    
+    // unimplemented
     T floor(K key) const;
-
+    // unimplemented
     T ceiling() const;
-
+    // unimplemented
     size_t count(K lo, K hi) const;
-    
+    // unimplemented
     void keys() const;
     
     class Iterator;
@@ -82,75 +85,6 @@ private:
 };
 
 template<typename K, typename T>
-class BinarySearchTree<K,T>::IteratorBase
-{
-public:
-    bool valid() const { return !s.empty(); }
-
-    T* value() { return s.empty() ? nullptr : &s.top()->_value; }
-    T* key() { return s.empty() ? nullptr : &s.top()->_key; }
-    T& operator*() { assert(valid()); return s.top()->_value; }
-    T& operator->() { return **this; }
-
-protected:
-    void pushAllLeft(Node* n)
-	{
-        for (; n; n = n->_left)
-            s.push(n);
-    }
-
-    void pushAllRight(Node* n)
-	{
-        for (; n; n = n->_right)
-            s.push(n);
-    }
-	
-    std::stack<Node*> s;
-};
-
-template<typename K, typename T>
-class BinarySearchTree<K,T>::Iterator : public BinarySearchTree<K,T>::IteratorBase
-{
-public:
-    void operator++()
-	{
-		if (IteratorBase::s.empty())
-			return;
-
-		auto right = IteratorBase::s.top()->_right;
-        IteratorBase::s.pop();
-        if (right)
-            IteratorBase::pushAllLeft(right);
-    }
-
-private:
-    friend class BinarySearchTree<K,T>;
-    
-    Iterator(Node* n) { IteratorBase::pushAllLeft(n); }
-};
-
-template<typename K, typename T>
-class BinarySearchTree<K,T>::ReverseIterator : public BinarySearchTree<K,T>::IteratorBase
-{
-public:
-    void operator++()
-	{
-		if (IteratorBase::s.empty())
-			return;
-
-		auto left = IteratorBase::s.top()->_left;
-        IteratorBase::s.pop();
-        if (left)
-            IteratorBase::pushAllRight(left);
-    }
-
-private:
-    friend class BinarySearchTree<K,T>;
-    
-    ReverseIterator(Node* n) { IteratorBase::pushAllRight(n); }
-};
-
-template<typename K, typename T>
 BinarySearchTree<K,T>::BinarySearchTree()
 	: _root(nullptr)
 	, _size(0)
@@ -159,6 +93,7 @@ BinarySearchTree<K,T>::BinarySearchTree()
 
 template<typename K, typename T>
 BinarySearchTree<K,T>::BinarySearchTree(std::initializer_list<std::pair<K,T>> list)
+    : BinarySearchTree()
 {
 	for(const auto& p : list)
 		insert(p.first, p.second);
@@ -166,21 +101,10 @@ BinarySearchTree<K,T>::BinarySearchTree(std::initializer_list<std::pair<K,T>> li
 
 template<typename K, typename T>
 BinarySearchTree<K,T>::BinarySearchTree(std::initializer_list<K> list)
+    : BinarySearchTree()
 {
 	for(const auto& k : list)
 		insert(k);
-}
-
-template<typename K, typename T>
-typename BinarySearchTree<K,T>::Iterator BinarySearchTree<K,T>::begin()
-{
-    return Iterator(_root);
-}
-
-template<typename K, typename T>
-typename BinarySearchTree<K,T>::ReverseIterator BinarySearchTree<K,T>::rbegin()
-{
-    return ReverseIterator(_root);
 }
 
 template<typename K, typename T>
@@ -208,53 +132,43 @@ bool BinarySearchTree<K,T>::exists(K key) const
 	return findNode(key);
 }
 
-#ifdef RECURSIVE_INSERT
+#ifndef RECURSIVE_INSERT
+template<typename K, typename T>
+void BinarySearchTree<K,T>::insert(K key, const T& value)
+{
+    Node** node = &_root;
+    while (*node) {
+        if      (key < (*node)->_key) node = &(*node)->_left;
+        else if (key > (*node)->_key) node = &(*node)->_right;
+        else {
+            // if value matches node replace value and return, nothing else to do
+            (*node)->_value = value;
+            return;
+        }
+    }
+    ++_size;
+    *node = new Node(key, value);
+}
+#else
 template<typename K, typename T>
 typename BinarySearchTree<K,T>::Node* BinarySearchTree<K,T>::insert(Node* node, K key, const T& value)
 {
-	if (node == nullptr) {
-		++_size;
-		return new Node(key, value);
-	}
-	if      (key < node->_key) node->_left  = insert(node->_left, key, value);
-	else if (key > node->_key) node->_right = insert(node->_right, key, value);
-	else                       node->_value = value;
-	return node;
+    if (node == nullptr) {
+        ++_size;
+        return new Node(key, value);
+    }
+    if      (key < node->_key) node->_left  = insert(node->_left, key, value);
+    else if (key > node->_key) node->_right = insert(node->_right, key, value);
+    else                       node->_value = value;
+    return node;
 }
 
 template<typename K, typename T>
 void BinarySearchTree<K,T>::insert(K key, const T& value)
 {
-	_root = insert(_root, key, value);
-}
-
-#else
-template<typename K, typename T>
-void BinarySearchTree<K,T>::insert(K key, const T& value)
-{
-	Node** node = &_root;
-	while (*node) {
-		if      (key < (*node)->_key) node = &(*node)->_left;
-		else if (key > (*node)->_key) node = &(*node)->_right;
-		else {
-			// if value matches node replace value and return, nothing else to do
-			(*node)->_value = value;
-			return;
-		}
-	}
-	++_size;
-	*node = new Node(key, value);
+    _root = insert(_root, key, value);
 }
 #endif
-
-template<typename K, typename T>
-void BinarySearchTree<K,T>::remove(K key)
-{
-	auto node = findNode(key);
-	if (node) {
-		
-	}
-}
 
 template<typename K, typename T>
 T* BinarySearchTree<K,T>::min() const
@@ -280,7 +194,86 @@ T* BinarySearchTree<K,T>::max() const
     return nullptr;
 }
 
+template<typename K, typename T>
+typename BinarySearchTree<K,T>::Iterator BinarySearchTree<K,T>::begin()
+{
+    return Iterator(_root);
+}
 
+template<typename K, typename T>
+typename BinarySearchTree<K,T>::ReverseIterator BinarySearchTree<K,T>::rbegin()
+{
+    return ReverseIterator(_root);
+}
 
+////////////////////////////////
+// Iterator implementations
+////////////////////////////////
+template<typename K, typename T>
+class BinarySearchTree<K,T>::IteratorBase
+{
+public:
+    bool valid() const { return !s.empty(); }
+    
+    T* value() { return s.empty() ? nullptr : &s.top()->_value; }
+    T* key() { return s.empty() ? nullptr : &s.top()->_key; }
+    T& operator*() { assert(valid()); return s.top()->_value; }
+    T& operator->() { return **this; }
+    
+protected:
+    void pushAllLeft(Node* n)
+    {
+        for (; n; n = n->_left)
+            s.push(n);
+    }
+    
+    void pushAllRight(Node* n)
+    {
+        for (; n; n = n->_right)
+            s.push(n);
+    }
+    
+    std::stack<Node*> s;
+};
 
+template<typename K, typename T>
+class BinarySearchTree<K,T>::Iterator : public BinarySearchTree<K,T>::IteratorBase
+{
+public:
+    void operator++()
+    {
+        if (IteratorBase::s.empty())
+            return;
+        
+        auto right = IteratorBase::s.top()->_right;
+        IteratorBase::s.pop();
+        if (right)
+            IteratorBase::pushAllLeft(right);
+    }
+    
+private:
+    friend class BinarySearchTree<K,T>;
+    
+    Iterator(Node* n) { IteratorBase::pushAllLeft(n); }
+};
 
+template<typename K, typename T>
+class BinarySearchTree<K,T>::ReverseIterator : public BinarySearchTree<K,T>::IteratorBase
+{
+public:
+    void operator++()
+    {
+        if (IteratorBase::s.empty())
+            return;
+        
+        auto left = IteratorBase::s.top()->_left;
+        IteratorBase::s.pop();
+        if (left)
+            IteratorBase::pushAllRight(left);
+    }
+    
+private:
+    friend class BinarySearchTree<K,T>;
+    
+    ReverseIterator(Node* n) { IteratorBase::pushAllRight(n); }
+};
