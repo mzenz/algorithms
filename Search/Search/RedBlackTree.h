@@ -62,15 +62,15 @@ private:
     struct Node {
         K _key;
         T _value;
-        Node* _left;
-        Node* _right;
+        Node* left;
+        Node* right;
         Color c;
 
         Node(K key, const T& value, Color color = Color::Red)
             : _key(key)
             , _value(value)
-            , _left(nullptr)
-            , _right(nullptr)
+            , left(nullptr)
+            , right(nullptr)
             , c(color)
         {
         }
@@ -119,8 +119,8 @@ typename RedBlackTree<K,T>::Node* RedBlackTree<K,T>::findNode(K key)
 {
     Node** node = &_root;
     while (*node) {
-        if      (key < (*node)->_key) node = &(*node)->_left;
-        else if (key > (*node)->_key) node = &(*node)->_right;
+        if      (key < (*node)->_key) node = &(*node)->left;
+        else if (key > (*node)->_key) node = &(*node)->right;
         else                          return   *node;
     }
     return nullptr;
@@ -145,8 +145,8 @@ bool RedBlackTree<K,T>::insert(K key, const T& value)
 {
     Node** node = &_root;
     while (*node) {
-        if      (key < (*node)->_key) node = &(*node)->_left;
-        else if (key > (*node)->_key) node = &(*node)->_right;
+        if      (key < (*node)->_key) node = &(*node)->left;
+        else if (key > (*node)->_key) node = &(*node)->right;
         else {
             // if value matches node replace value and return, nothing else to do
             (*node)->_value = value;
@@ -165,8 +165,8 @@ typename RedBlackTree<K,T>::Node* RedBlackTree<K,T>::insert(Node* node, K key, c
         ++_size;
         return new Node(key, value);
     }
-    if      (key < node->_key) node->_left  = insert(node->_left, key, value);
-    else if (key > node->_key) node->_right = insert(node->_right, key, value);
+    if      (key < node->_key) node->left  = insert(node->left, key, value);
+    else if (key > node->_key) node->right = insert(node->right, key, value);
     else                       node->_value = value;
     return node;
 }
@@ -188,9 +188,9 @@ T* RedBlackTree<K,T>::min() const
 {
     Node* n = _root;
     while (n) {
-        if (!n->_left)
+        if (!n->left)
             return &n->_value;
-        n = n->_left;
+        n = n->left;
     }
     return nullptr;
 }
@@ -200,9 +200,9 @@ T* RedBlackTree<K,T>::max() const
 {
     Node* n = _root;
     while (n) {
-        if (!n->_right)
+        if (!n->right)
             return &n->_value;
-        n = n->_right;
+        n = n->right;
     }
     return nullptr;
 }
@@ -236,13 +236,13 @@ public:
 protected:
     void pushAllLeft(Node* n)
     {
-        for (; n; n = n->_left)
+        for (; n; n = n->left)
             s.push(n);
     }
     
     void pushAllRight(Node* n)
     {
-        for (; n; n = n->_right)
+        for (; n; n = n->right)
             s.push(n);
     }
     
@@ -258,7 +258,7 @@ public:
         if (IteratorBase::s.empty())
             return;
         
-        auto right = IteratorBase::s.top()->_right;
+        auto right = IteratorBase::s.top()->right;
         IteratorBase::s.pop();
         if (right)
             IteratorBase::pushAllLeft(right);
@@ -279,7 +279,7 @@ public:
         if (IteratorBase::s.empty())
             return;
         
-        auto left = IteratorBase::s.top()->_left;
+        auto left = IteratorBase::s.top()->left;
         IteratorBase::s.pop();
         if (left)
             IteratorBase::pushAllRight(left);
