@@ -10,7 +10,10 @@ template<typename K, typename T>
 class BinarySearchTree
 {
 public:
-	BinarySearchTree();
+    typedef K KeyType;
+    typedef T ValueType;
+
+    BinarySearchTree();
 	BinarySearchTree(std::initializer_list<std::pair<K,T>> list);
 	BinarySearchTree(std::initializer_list<K> list);
 
@@ -84,7 +87,8 @@ class BinarySearchTree<K,T>::IteratorBase
 public:
     bool valid() const { return !s.empty(); }
 
-    T* get() { return s.empty() ? nullptr : &s.top()->_value; }
+    T* value() { return s.empty() ? nullptr : &s.top()->_value; }
+    T* key() { return s.empty() ? nullptr : &s.top()->_key; }
     T& operator*() { assert(valid()); return s.top()->_value; }
     T& operator->() { return **this; }
 
