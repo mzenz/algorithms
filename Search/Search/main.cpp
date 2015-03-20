@@ -1,32 +1,21 @@
 #include <iostream>
 #include "BinarySearchTree.h"
+#include "RedBlackTree.h"
 #include <vector>
 #include <set>
 
 using namespace std;
 
-#define INIT_LIST
-
 int main(int argc, const char * argv[])
 {
-	typedef BinarySearchTree<char, std::string> BST;
-	
-#ifdef INIT_LIST
+    typedef BinarySearchTree<char, std::string> BST;
+
     BST t { {'D', "d"},
 			{'A', "a"},
 			{'B', "b"},
 			{'C', "c"},
 			{'X', "x"},
 			{'R', "r"}};
-#else
-    BST t;
-	t.insert('D', "d");
-	t.insert('A', "a");
-	t.insert('B', "b");
-    t.insert('C', "c");
-    t.insert('X', "x");
-    t.insert('R', "r");
-#endif
 
 	auto v = t.get('C');
     cout << "v = " << (v ? *v : "null")<< endl;

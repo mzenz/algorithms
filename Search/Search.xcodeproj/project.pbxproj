@@ -26,6 +26,7 @@
 		54C414E71AAE98FE00A7B3CF /* BinarySearchTree.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BinarySearchTree.h; path = Search/BinarySearchTree.h; sourceTree = "<group>"; };
 		5B4665CA1A8D1C0C00135794 /* Search */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Search; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B4665CD1A8D1C0C00135794 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = Search/main.cpp; sourceTree = "<group>"; };
+		5B7425DF1ABBDBF100B52CC8 /* RedBlackTree.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RedBlackTree.h; path = Search/RedBlackTree.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +44,7 @@
 			isa = PBXGroup;
 			children = (
 				54C414E71AAE98FE00A7B3CF /* BinarySearchTree.h */,
+				5B7425DF1ABBDBF100B52CC8 /* RedBlackTree.h */,
 				5B4665CD1A8D1C0C00135794 /* main.cpp */,
 				5B4665CB1A8D1C0C00135794 /* Products */,
 			);

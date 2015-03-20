@@ -44,7 +44,6 @@ public:
     
     void keys() const;
     
-    class IteratorBase;
     class Iterator;
     class ReverseIterator;
 
@@ -66,7 +65,9 @@ private:
 		Node* _left;
 		Node* _right;
     };
-	
+
+    class IteratorBase;
+
 #ifdef RECURSIVE_INSERT
 	Node* insert(Node* node, K key, const T& value);
 #endif
