@@ -221,38 +221,39 @@ void BinarySearchTree<K,T>::erase(K key)
 	if (!node.node)
 		return;
 
-	auto successor = minNode(node.node->right);
-	if (successor.node) {
-		assert(successor.parent->left == successor.node);
-		assert(successor.node->left == nullptr);
+	// find successor as replacement
+	auto replacement = minNode(node.node->right);
+	if (replacement.node) {
+		assert(replacement.parent->left == replacement.node);
+		assert(replacement.node->left == nullptr);
 
-		successor.parent->left = successor.node->right;
-		// make parent point to successor
+		replacement.parent->left = replacement.node->right;
 		if (node.parent->left == node.node)
-			node.parent->left = successor.node;
+			node.parent->left = replacement.node;
 		else
-			node.parent->right = successor.node;
-		
-		successor.node->left = node.node->left;
-		successor.node->right = node.node->right;
+			node.parent->right = replacement.node;
+
+		replacement.node->left = node.node->left;
+		replacement.node->right = node.node->right;
 	}
 	else {
-		auto predecessor = maxNode(node.node->left);
-		if (predecessor.node) {
-			assert(predecessor.parent->right == predecessor.node);
-			assert(predecessor.node->right == nullptr);
+		// find predecessor as replacement
+		replacement = maxNode(node.node->left);
+		if (replacement.node) {
+			assert(replacement.parent->right == replacement.node);
+			assert(replacement.node->right == nullptr);
 
-			predecessor.parent->right = predecessor.node->left;
-			// make parent point to predecessor
+			replacement.parent->right = replacement.node->left;
 			if (node.parent->left == node.node)
-				node.parent->left = predecessor.node;
+				node.parent->left = replacement.node;
 			else
-				node.parent->right = predecessor.node;
+				node.parent->right = replacement.node;
 
-			predecessor.node->left = node.node->left;
-			predecessor.node->right = node.node->right;
+			replacement.node->left = node.node->left;
+			replacement.node->right = node.node->right;
 		}
 		else {
+			// there's no successor or predecessor
 			if (node.parent->left == node.node)
 				node.parent->left = nullptr;
 			else
