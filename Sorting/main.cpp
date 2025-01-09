@@ -34,6 +34,7 @@ int main(int argc, const char * argv[]) {
   // selectionSort(v);
   // insertionSort(v);
   // shellSort(v);
+  // mergeSortRecursive(v);
   // mergeSort(v);
   // quickSort(v);
   heapSort(v);
