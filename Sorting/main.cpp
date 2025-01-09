@@ -9,10 +9,10 @@
 #include <algorithm>
 
 template<class T>
-void p(const std::vector<T>& v)
+void print(const std::vector<T>& v)
 {
   for(auto d : v) {
-        std::cout << d << " ";
+    std::cout << d << " ";
   }
   std::cout << std::endl;
 }
@@ -22,8 +22,7 @@ int main(int argc, const char * argv[]) {
   std::vector<char> v { 'S','O','R','T','E','X','A','M','P','L','E' };
 
   std::cout << "before:\n";
-  p(v);
-
+  print(v);
 
 //  for (size_t k = 0; k < v.size(); ++k) {
 //    auto v1(v);
@@ -32,18 +31,18 @@ int main(int argc, const char * argv[]) {
 //    std::cout << k << " element = " << v1[k] << std::endl;
 //  }
 
-//  selectionSort(v);
-//  insertionSort(v);
-//  shellSort(v);
-//  mergeSort(v);
-//  quickSort(v);
-    heapSort(v);
+  // selectionSort(v);
+  // insertionSort(v);
+  // shellSort(v);
+  // mergeSort(v);
+  // quickSort(v);
+  heapSort(v);
 
-//  std::sort(v.begin(), v.end());
-//  std::stable_sort(v.begin(), v.end());
+  // std::sort(v.begin(), v.end());
+  // std::stable_sort(v.begin(), v.end());
 
   std::cout << "\nafter:\n";
-  p(v);
+  print(v);
   std::cout << "\nsorted? " << (std::is_sorted(v.begin(), v.end()) ? "YES" : "NOPE") << std::endl;
 
   return 0;
