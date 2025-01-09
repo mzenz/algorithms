@@ -2,11 +2,13 @@
 #include "InsertionSort.h"
 #include "ShellSort.h"
 #include "MergeSort.h"
+#include "BucketSort.h"
 #include "QuickSort.h"
 #include "HeapSort.h"
 #include "Select.h"
 #include <iostream>
 #include <algorithm>
+#include <cassert>
 
 template<class T>
 void print(const std::vector<T>& v)
@@ -17,19 +19,13 @@ void print(const std::vector<T>& v)
   std::cout << std::endl;
 }
 
-int main(int argc, const char * argv[]) {
-//  std::vector<double> v { 6.22, 1.23, 4.54, 0.91, 3.14, 0.03, -5.66, -2.01, 10.9, 7.24 };
+int main(int argc, const char * argv[])
+{
+  // std::vector<double> v { .22, .23, .54, .91, .14, 0.03, .66, .01, .9, .24 };
   std::vector<char> v { 'S','O','R','T','E','X','A','M','P','L','E' };
 
   std::cout << "before:\n";
   print(v);
-
-//  for (size_t k = 0; k < v.size(); ++k) {
-//    auto v1(v);
-//    std::cout << k << " element = " << (char)select(v1, k) << std::endl;
-//    std::nth_element(v1.begin(), v1.begin() + k, v1.end());
-//    std::cout << k << " element = " << v1[k] << std::endl;
-//  }
 
   // selectionSort(v);
   // insertionSort(v);
@@ -38,13 +34,17 @@ int main(int argc, const char * argv[]) {
   // mergeSort(v);
   // quickSort(v);
   heapSort(v);
+  // bucketSort(v);
 
   // std::sort(v.begin(), v.end());
   // std::stable_sort(v.begin(), v.end());
 
+  const bool isSorted = std::is_sorted(v.begin(), v.end());
+
   std::cout << "\nafter:\n";
   print(v);
-  std::cout << "\nsorted? " << (std::is_sorted(v.begin(), v.end()) ? "YES" : "NOPE") << std::endl;
+  std::cout << "\nsorted? " << (isSorted ? "YES" : "NOPE") << std::endl;
+  assert(isSorted);
 
   return 0;
 }

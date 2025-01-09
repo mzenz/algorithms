@@ -16,4 +16,4 @@ endif()
 # Enable debug symbols for LLDB
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 
-add_executable(sort main.cpp)
+add_executable(main main.cpp)
