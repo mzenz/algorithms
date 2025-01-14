@@ -28,15 +28,31 @@ int main(int argc, const char * argv[])
   g.addEdge(3,5);
   g.addEdge(3,4);
 
-  cout << "graph vertices: " << g.vertices() << endl;
-  cout << "graph edges: " << g.edges() << endl;
-  printGraph(g);
+  // cout << "graph vertices: " << g.vertices() << endl;
+  // cout << "graph edges: " << g.edges() << endl;
+  // printGraph(g);
 
-  auto path = findPathDFS(g, 0, 5);
-  cout << "Depth first path: " << endl;
+  const size_t from = 0, to = 5;
+  // const size_t from = 0, to = 3;
+  // const size_t from = 0, to = 4;
+  // const size_t from = 0, to = 1;
+
+  cout << "Traversing graph from " << from << " -> " << to << ":" << endl;
+
+  auto path = findPathDFS(g, from, to);
+
+  cout << "Depth-first path:" << endl;
   for (auto i : path) {
     cout << i << " ";
   }
   cout << endl;
-  cout << "path size: " << path.size() << endl;
+  cout << "path size: " << path.size() - 1 << endl;
+
+  auto shortestPath = findShortestPath(g, from, to);
+  cout << "Shortest path:" << endl;
+  for (auto i : shortestPath) {
+    cout << i << " ";
+  }
+  cout << endl;
+  cout << "path size: " << shortestPath.size() - 1 << endl;
 }

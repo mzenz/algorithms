@@ -6,8 +6,6 @@
 #include <limits>
 #include <cassert>
 
-// #include <iostream>
-
 class Graph
 {
   public:
@@ -57,12 +55,9 @@ std::list<size_t> findPathDFS(const Graph& g, size_t v, size_t to) {
   std::vector<bool> visited(g.vertices(), false);
   std::vector<size_t> edgeTo(g.vertices());
 
-  using namespace std;
-
   dfs(g, v, visited, edgeTo);
 
   std::list<size_t> path;
-
   if (visited[to]) {
     for (size_t i = to; i != v; i = edgeTo[i]) {
       path.push_front(i);
@@ -73,34 +68,36 @@ std::list<size_t> findPathDFS(const Graph& g, size_t v, size_t to) {
   return path;
 }
 
-// struct BreadthFirstPath {
-//   const Graph& _g;
-//   std::vector<size_t> edgeTo;
-//   std::vector<bool> visited;
+std::list<size_t> findShortestPath(const Graph& g, size_t from, size_t to) {
+  std::vector<bool> visited(g.vertices(), false);
+  std::vector<size_t> edgeTo(g.vertices());
 
-//   BreadthFirstPath(const Graph& g)
-//     : _g(g)
-//     , edgeTo(g.vertices(), 0)
-//     , visited(g.vertices(), false)
-//   {
-//   }
+  std::deque<size_t> q;
+  visited[from] = true;
+  q.push_back(from);
 
-//   void bfs(const Graph& g, size_t s) {
-//     std::deque<size_t> q;
-//     q.push_back(s);
-//     visited[s] = true;
+  while (!q.empty()) {
+    auto v = q.back();
+    q.pop_back();
 
-//     while (!q.empty()) {
-//       auto v = q.back();
-//       q.pop_back();
-//       const auto vertices = g.adj(v);
-//       for (auto it = vertices.begin(); it != vertices.end(); ++it) {
-//         if ((!visited[w])) {
-//           q.push_back(w);
-//           visited[w] = true;
-//           edgeTo[w] = v;
-//         }
-//       }
-//     }
-//   }
-// };
+    const auto vertices = g.adj(v);
+    for (auto it = vertices.begin(); it != vertices.end(); ++it) {
+      auto w = *it;
+      if ((!visited[w])) {
+        edgeTo[w] = v;
+        visited[w] = true;
+        q.push_back(w);
+      }
+    }
+  }
+
+  std::list<size_t> path;
+  if (visited[to]) {
+    for (size_t i = to; i != from; i = edgeTo[i]) {
+      path.push_front(i);
+    }
+    path.push_front(from);
+  }
+
+  return path;
+}
