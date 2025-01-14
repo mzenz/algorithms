@@ -24,6 +24,7 @@
       "stopAtEntry": false,
       "cwd": "${fileDirname}",
       "environment": [],
+      // "MIMode": "lldb",
       "externalConsole": false,
     },
     {
@@ -35,6 +36,7 @@
       "stopAtEntry": false,
       "cwd": "${fileDirname}",
       "environment": [],
+      // "MIMode": "lldb",
       "externalConsole": false,
     }
   ]

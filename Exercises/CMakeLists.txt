@@ -15,4 +15,5 @@ endif()
 # enable debug symbols
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 
-add_executable(main main.cpp)
+# add_executable(main main.cpp)
+add_executable(main ransom_note.cpp)
