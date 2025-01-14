@@ -4,18 +4,15 @@
 #include <vector>
 #include <cassert>
 
-//#define RECURSIVE_INSERT
-
 template<typename K, typename T>
-class BinarySearchTree
-{
+class RedBlackTree {
 public:
   typedef K KeyType;
   typedef T ValueType;
 
-  BinarySearchTree();
-  BinarySearchTree(std::initializer_list<std::pair<K,T>> list);
-  BinarySearchTree(std::initializer_list<K> list);
+  RedBlackTree();
+  RedBlackTree(std::initializer_list<std::pair<K,T>> list);
+  RedBlackTree(std::initializer_list<K> list);
 
   T* get(K key);
   const T* get(K key) const;
@@ -76,13 +73,40 @@ private:
     , color(_color)
     {
     }
+
+    Node* rotateLeft() {
+      assert(color == Color::Red);
+      const Node* x = right;
+      right = x->left;
+      x->left = h;
+      x->color = h->color;
+      h->color = Color::Red;
+      return x;
+    }
+
+    Node* rotateRight() {
+      assert(color == Color::Black);
+      const Node* x = left;
+      left = x->right;
+      x->right = h;
+      x->color = h->color;
+      h->color = Color::Red;
+      return x;
+    }
+
+    void flipColors() {
+      assert(color != Color::Red);
+      assert(left == Color::Red);
+      assert(right == Color::Red);
+      color = Color::Red;
+      left->color = Color::Black;
+      right->color = Color::Black;
+    }
   };
 
   class IteratorBase;
 
-#ifdef RECURSIVE_INSERT
   Node* put(Node* node, K key, const T& value);
-#endif
 
   struct NodePair
   {
@@ -121,30 +145,30 @@ private:
 };
 
 template<typename K, typename T>
-BinarySearchTree<K,T>::BinarySearchTree()
+RedBlackTree<K,T>::RedBlackTree()
   : _root(nullptr)
   , _size(0)
 {
 }
 
 template<typename K, typename T>
-BinarySearchTree<K,T>::BinarySearchTree(std::initializer_list<std::pair<K,T>> list)
-  : BinarySearchTree()
+RedBlackTree<K,T>::RedBlackTree(std::initializer_list<std::pair<K,T>> list)
+  : RedBlackTree()
 {
   for(const auto& p : list)
     put(p.first, p.second);
 }
 
 template<typename K, typename T>
-BinarySearchTree<K,T>::BinarySearchTree(std::initializer_list<K> list)
-  : BinarySearchTree()
+RedBlackTree<K,T>::RedBlackTree(std::initializer_list<K> list)
+  : RedBlackTree()
 {
   for(const auto& k : list)
     put(k);
 }
 
 template<typename K, typename T>
-typename BinarySearchTree<K,T>::NodePair BinarySearchTree<K,T>::findNode(K key, Node* root)
+typename RedBlackTree<K,T>::NodePair RedBlackTree<K,T>::findNode(K key, Node* root)
 {
   NodePair p(root ? root : _root, nullptr);
   for (auto i = 0; p.node; ++i) {
@@ -163,39 +187,26 @@ typename BinarySearchTree<K,T>::NodePair BinarySearchTree<K,T>::findNode(K key, 
 }
 
 template<typename K, typename T>
-T* BinarySearchTree<K,T>::get(K key)
+T* RedBlackTree<K,T>::get(K key)
 {
   auto node = findNode(key);
   return node.node ? &node.node->_value : nullptr;
 }
 
 template<typename K, typename T>
-bool BinarySearchTree<K,T>::exists(K key) const
+bool RedBlackTree<K,T>::exists(K key) const
 {
   return findNode(key);
 }
 
-#ifndef RECURSIVE_INSERT
 template<typename K, typename T>
-bool BinarySearchTree<K,T>::put(K key, const T& value)
+bool RedBlackTree<K,T>::put(K key, const T& value)
 {
-  Node** node = &_root;
-  while (*node) {
-    if    (key < (*node)->_key) node = &(*node)->left;
-    else if (key > (*node)->_key) node = &(*node)->right;
-    else {
-      // if value matches node replace value and return, nothing else to do
-      (*node)->_value = value;
-      return false;
-    }
-  }
-  ++_size;
-  *node = new Node(key, value);
-  return true;
+  _root = put(_root, key, value);
 }
-#else
+
 template<typename K, typename T>
-typename BinarySearchTree<K,T>::Node* BinarySearchTree<K,T>::put(Node* node, K key, const T& value)
+typename RedBlackTree<K,T>::Node* RedBlackTree<K,T>::put(Node* node, K key, const T& value)
 {
   if (node == nullptr) {
     ++_size;
@@ -208,14 +219,7 @@ typename BinarySearchTree<K,T>::Node* BinarySearchTree<K,T>::put(Node* node, K k
 }
 
 template<typename K, typename T>
-void BinarySearchTree<K,T>::put(K key, const T& value)
-{
-  _root = put(_root, key, value);
-}
-#endif
-
-template<typename K, typename T>
-void BinarySearchTree<K,T>::erase(K key)
+void RedBlackTree<K,T>::erase(K key)
 {
   auto node = findNode(key);
   if (!node.node)
@@ -266,7 +270,7 @@ void BinarySearchTree<K,T>::erase(K key)
 }
 
 template<typename K, typename T>
-const T* BinarySearchTree<K,T>::min() const
+const T* RedBlackTree<K,T>::min() const
 {
   Node* n = _root;
   while (n) {
@@ -278,7 +282,7 @@ const T* BinarySearchTree<K,T>::min() const
 }
 
 template<typename K, typename T>
-const T* BinarySearchTree<K,T>::max() const
+const T* RedBlackTree<K,T>::max() const
 {
   Node* n = _root;
   while (n) {
@@ -290,25 +294,25 @@ const T* BinarySearchTree<K,T>::max() const
 }
 
 template<typename K, typename T>
-typename BinarySearchTree<K,T>::Iterator BinarySearchTree<K,T>::begin()
+typename RedBlackTree<K,T>::Iterator RedBlackTree<K,T>::begin()
 {
   return Iterator(_root);
 }
 
 template<typename K, typename T>
-const typename BinarySearchTree<K,T>::Iterator BinarySearchTree<K,T>::begin() const
+const typename RedBlackTree<K,T>::Iterator RedBlackTree<K,T>::begin() const
 {
   return Iterator(_root);
 }
 
 template<typename K, typename T>
-typename BinarySearchTree<K,T>::ReverseIterator BinarySearchTree<K,T>::rbegin()
+typename RedBlackTree<K,T>::ReverseIterator RedBlackTree<K,T>::rbegin()
 {
   return ReverseIterator(_root);
 }
 
 template<typename K, typename T>
-const typename BinarySearchTree<K,T>::ReverseIterator BinarySearchTree<K,T>::rbegin() const
+const typename RedBlackTree<K,T>::ReverseIterator RedBlackTree<K,T>::rbegin() const
 {
   return ReverseIterator(_root);
 }
@@ -317,7 +321,7 @@ const typename BinarySearchTree<K,T>::ReverseIterator BinarySearchTree<K,T>::rbe
 // Iterator implementations
 ////////////////////////////////
 template<typename K, typename T>
-class BinarySearchTree<K,T>::IteratorBase
+class RedBlackTree<K,T>::IteratorBase
 {
 public:
   bool valid() const { return !s.empty(); }
@@ -344,7 +348,7 @@ protected:
 };
 
 template<typename K, typename T>
-class BinarySearchTree<K,T>::Iterator : public BinarySearchTree<K,T>::IteratorBase
+class RedBlackTree<K,T>::Iterator : public RedBlackTree<K,T>::IteratorBase
 {
 public:
   void operator++()
@@ -359,13 +363,13 @@ public:
   }
 
 private:
-  friend class BinarySearchTree<K,T>;
+  friend class RedBlackTree<K,T>;
 
   Iterator(Node* n) { IteratorBase::pushAllLeft(n); }
 };
 
 template<typename K, typename T>
-class BinarySearchTree<K,T>::ReverseIterator : public BinarySearchTree<K,T>::IteratorBase
+class RedBlackTree<K,T>::ReverseIterator : public RedBlackTree<K,T>::IteratorBase
 {
 public:
   void operator++()
@@ -380,7 +384,7 @@ public:
   }
 
 private:
-  friend class BinarySearchTree<K,T>;
+  friend class RedBlackTree<K,T>;
 
   ReverseIterator(Node* n) { IteratorBase::pushAllRight(n); }
 };

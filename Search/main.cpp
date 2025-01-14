@@ -65,7 +65,7 @@ void testReverseIterator()
   srand((int)time(nullptr));
   for (auto i = 0; i < 32; ++i) {
     auto r = 100 * (float)rand() / RAND_MAX;
-    t.insert(r, r);
+    t.put(r, r);
   }
 
   vector<BST::KeyType> v(t.size());
@@ -83,7 +83,7 @@ void testForwardIterator()
   srand((int)time(nullptr));
   for (auto i = 0; i < 32; ++i) {
     auto r = 100 * (float)rand() / RAND_MAX;
-    t.insert(r, r);
+    t.put(r, r);
   }
 
   assert(validateBST(t));
@@ -96,7 +96,7 @@ void testRBT()
   srand((int)time(nullptr));
   for (auto i = 0; i < 32; ++i) {
     auto r = 100 * (float)rand() / RAND_MAX;
-    t.insert(r, r);
+    t.put(r, r);
   }
 
   vector<RBT::KeyType> v(t.size());
