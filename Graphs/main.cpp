@@ -39,7 +39,7 @@ int main(int argc, const char * argv[])
 
   cout << "Traversing graph from " << from << " -> " << to << ":" << endl;
 
-  auto path = findPathDFS(g, from, to);
+  auto path = findPath(g, from, to);
 
   cout << "Depth-first path:" << endl;
   for (auto i : path) {

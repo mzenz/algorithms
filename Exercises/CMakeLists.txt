@@ -5,7 +5,7 @@ project(exercises)
 set(CMAKE_C_COMPILER clang)
 set(CMAKE_CXX_COMPILER clang++)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if(NOT CMAKE_BUILD_TYPE)
@@ -16,4 +16,4 @@ endif()
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 
 # add_executable(main main.cpp)
-add_executable(main ransom_note.cpp)
+add_executable(main main.cpp)

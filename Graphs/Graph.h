@@ -51,7 +51,7 @@ void dfs(
   }
 }
 
-std::list<size_t> findPathDFS(const Graph& g, size_t v, size_t to) {
+std::list<size_t> findPath(const Graph& g, size_t v, size_t to) {
   std::vector<bool> visited(g.vertices(), false);
   std::vector<size_t> edgeTo(g.vertices());
 
@@ -71,8 +71,8 @@ std::list<size_t> findPathDFS(const Graph& g, size_t v, size_t to) {
 std::list<size_t> findShortestPath(const Graph& g, size_t from, size_t to) {
   std::vector<bool> visited(g.vertices(), false);
   std::vector<size_t> edgeTo(g.vertices());
-
   std::deque<size_t> q;
+
   visited[from] = true;
   q.push_back(from);
 

@@ -1,35 +1,44 @@
-#include "Exercises.h"
+#include "TopK.h"
+#include "FizzBuzz.h"
+#include "ListMerge.h"
 #include "../utils/utils.h"
 #include <iostream>
 
 using namespace std;
 
-typedef std::vector<std::pair<uint, std::string>> Prefixes;
+// int main(int argc, const char * argv[])
+// {
+//   fizzBuzz(100);
+// }
 
-void fizzBuzz(size_t count) {
-  for (auto i = 0; i < count; ++i) {
-    const bool div3 = i % 3 == 0;
-    const bool div5 = i % 5 == 0;
-    if (div3 && div5) {
-      cout << "fizzbuzz" << endl;
-    } else if (div3) {
-      cout << i << " fizz" << endl;
-    } else if (div5) {
-      cout << i << " buzz" << endl;
-    } else {
-      cout << i << endl;
-    }
-  }
-}
+// int main(int argc, const char * argv[])
+// {
+//   vector<int> v { 1,1,1,2,2,100,100,55,44,11 };
+//   const auto k = 2;
+//   const auto topK = findTopK(v, k);
 
-int main(int argc, const char * argv[])
-{
-  // vector<int> v { 1,1,1,2,2,100,100,55,44,11 };
-  // const auto k = 2;
-  // const auto topK = findTopK(v, k);
+//   cout << "TOP " << k << " elements:" << endl;
+//   printVector(topK);
+// }
 
-  // cout << "TOP " << k << " elements:" << endl;
-  // printVector(topK);
+int main() {
+    list<int> a {1,3,5,7};
+    list<int> b {2,4,5,8,10};
+    list<int> c {0,20,30,45,55};
+    list<int> d {500,2000,3500};
+    list<int> ab;
+    list<int> abcd;
+    vector<list<int>> lists {a,b,c,d};
 
-  fizzBuzz(100);
+    mergeInPlace(a, b);
+    cout << "a + b:" << endl;
+    for (auto it = b.begin(); it != b.end(); ++it)
+      cout << *it << ", ";
+    cout << endl;
+
+    mergeListsInPlace(lists, abcd);
+    cout << "a + b + c + d:" << endl;
+    for (auto it = abcd.begin(); it != abcd.end(); ++it)
+        cout << *it << ", ";
+    cout << endl;
 }
